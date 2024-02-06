@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Base page</title>
+</head>
+
+<body>
+
+<div class="nav">
+
+<h3>Navbar<h3>
+
+    <div class="follow-list-block">
+
+        <button onclick="follow_lists_manager.getFollowLists()">Get lists</button>
+
+    </div>
+
+    <div style="display: flex; ">
+        <select name="" id="currency-selector">
+            <option value="usd">usd</option>
+            <option value="eur">eur</option>
+            <option value="rub">rub</option>
+        </select>
+
+        <input name="" id="skip-input">
+        <label for="skip-input">enter skip</label>
+        <input type="text" id="limit-input">
+        <label for="limit-input">enter limit</label>
+
+        <button id="get-data-button">Get data</button>
+    </div>
+
+
+</div>
+<nav class="nav">
+    <li><a href="#">Some link</a></li>
+    <li><a href="#">Some link</a></li>
+    <li><a href="#">Some link</a></li>
+</nav>
+
+<div class="container">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="modal">
+        <h3>Modal window block</h3>
+        <div class="modal content">
+            <p2>Modal content div</p2>
+        </div>
+        <div class="chart-container container" id="chart-container"><p>Modal chart div</p></div>
+
+    </div>
+
+    <div class="content" id="content">
+
+    </div>
+
+</div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="{{ url_for('static', path='js/base.js') }}"></script>
+<script src="{{ url_for('static', path='js/buttons.js') }}"></script>
+<script src="{{ url_for('static', path='js/items/chart.js') }}"></script>
+<script src="{{ url_for('static', path='js/items/bubbles.js') }}"></script>
+<script src="{{ url_for('static', path='js/modals/modal.js') }}"></script>
+<script src="{{ url_for('static', path='js/follow_lists.js') }}"></script>
+<script>
+
+
+class URLS_MANAGER {
+
+    constructor() {
+        this.MARKET_DATA_URL = 'api/v1/market_data/'
+        this.MARKET_DATA_WITH_SKIP = 'api/v1/market_data/'
+        this.COIN_CHART_URL = 'api/v1/charts/'
+    }
+
+    getMarketCapUrl(currency) {
+        return this.MARKET_DATA_URL + currency
+    }
+
+    getCoinChartUrl() {
+        return this.COIN_CHART_URL
+    }
+
+    getMarketCapWithSkipLimitUrl(currency) {
+        return this.MARKET_DATA_WITH_SKIP + currency + '/'
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    urls_manager = new URLS_MANAGER()
+    follow_lists_manager = new followListsManager()
+})
+
+</script>
+
+</html>
