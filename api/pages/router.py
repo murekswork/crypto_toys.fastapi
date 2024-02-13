@@ -8,4 +8,4 @@ templates = Jinja2Templates(directory='api/templates')
 
 @pages_router.get('/')
 def get_base_page(request: Request):
-    return templates.TemplateResponse('base.html', {'request': request})
+    return templates.TemplateResponse('_base.html', {'request': request})

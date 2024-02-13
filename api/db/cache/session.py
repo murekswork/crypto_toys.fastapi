@@ -1,6 +1,7 @@
 import logging
 
-from aioredis import ConnectionPool, Redis
+from aioredis import ConnectionPool
+
 
 async def get_redis() -> ConnectionPool:
     try:

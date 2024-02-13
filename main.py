@@ -1,19 +1,20 @@
-from fastapi import FastAPI
-from fastapi.routing import APIRoute, APIRouter
-from starlette.staticfiles import StaticFiles
+from fastapi import APIRouter, FastAPI
 from starlette.middleware.sessions import SessionMiddleware
+from starlette.staticfiles import StaticFiles
 
-from api.router.first_router import parsing_router
 from api.pages.router import pages_router
+from api.router.coin_router import coin_router
+from api.router.session_router import session_router
 
-
-app = FastAPI(title='Covid-19 API')
+app = FastAPI(title='api v.0.1', description='desc')
 app.mount('/static', StaticFiles(directory='api/static'), name='static')
 router = APIRouter(prefix='/api/v1')
 
+
 def create_app() -> FastAPI:
-    router.include_router(parsing_router)
+    router.include_router(coin_router)
     app.include_router(router)
+    app.include_router(session_router)
     app.include_router(pages_router)
     app.add_middleware(SessionMiddleware, secret_key='very_secret_key', max_age=None)
     return app

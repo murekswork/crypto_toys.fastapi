@@ -1,5 +1,6 @@
+from typing import Any
+
 from pydantic import BaseModel
-from typing import Dict, Any
 
 
 class CoinSchema(BaseModel):
@@ -13,7 +14,7 @@ class CoinSchema(BaseModel):
     stable: bool
     circulating_supply: int
     dominance: float
-    rankDiffs: Dict[str, int]
+    rankDiffs: dict[str, int]
     cg_id: str
     price: float
     marketcap: int

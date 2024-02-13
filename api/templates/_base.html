@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Cover Template · Bootstrap v5.1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/cover/">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+    <!-- Bootstrap core CSS -->
+
+    <!-- Favicons -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<meta name="theme-color" content="#7952b3">
+
+
+    <!-- Custom styles for this template -->
+  </head>
+  <body class="h-100 text-center text-dark">
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
+  <canvas style="position: absolute; max-width: 100%; max-height: 100%" id="bubbleCanvas"></canvas>
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0">бабблс</h3>
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link text-dark" aria-current="page" href="#">хоум</a>
+        <a class="nav-link text-dark" href="#">фичес</a>
+        <a class="nav-link text-dark" href="#">контакт</a>
+
+        <select style="z-index: 2" class="nav-link text-dark" name="" id="currency selector" onchange="changeSelectedCurrency(this.value)">
+          <option value="usd">usd</option>
+          <option value="rub">rub</option>
+          <option value="eur">eur</option>
+        </select>
+
+        <select style="z-index: 2" class="nav-link text-dark" onchange="get_data_with_skip_limit(handleDataAndFillTable, selected_currency, this.value, 100)" name="coin data selector" id="coin data selector">
+          <option value="0">0-100</option>
+          <option value="100">100-200</option>
+          <option value="200">200-300</option>
+          <option value="300">300-400</option>
+          <option value="400">400-500</option>
+          <option value="500">500-600</option>
+          <option value="600">600-700</option>
+        </select>
+
+      </nav>
+    </div>
+  </header>
+
+  <main class="px-3" style="position:relative; -webkit-user-select: none; -moz-user-select: none; user-select: none; -ms-user-select: none">
+    <h1>@github.com/murekswork</h1>
+    <p class="lead">i'm open to <a href="" style="color: black; text-decoration: line-through"> paid </a> any  suggestions, all contacts on github.</p>
+    <p class="lead">special thanks to cryptobubbles dot com i'm sorry for this but i have not money for normal crypto api :)
+    </p>
+  </main>
+
+  <footer class="mt-auto text-white-50">
+    <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+  </footer>
+</div>
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    !-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+  <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" style="top: 25%; backdrop-filter: blur(30px)">
+    <div class="modal-content" id="" style="background-color: rgb(0,0,0, 0.1); border-radius: 15%">
+
+      <div class="modal-header" style="border: none">
+        <h3 id="modal-coin-name" class="fs-1" style="color: white">Coin name</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input class="input" type="text" placeholder="calculate"> <a style="text-decoration: none; color: black" class="fs-4">result</a>
+      <!-- Chart canvas        -->
+        <div id="modalBody">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+      <div class="modal-footer" style="border-top: none; padding: 0;">
+
+        <div class="w-100 d-flex">
+          <div class="d-flex" style="margin: 0; flex-direction: column-reverse; display: flex; bottom: 0!important;">
+            <small class="coin-performance" id="hour diff"></small>
+            <button onclick="get_coin_chart_data(handleCoinChartData, selected_coin['id'], 'hour')" type="button" class="btn" id="hourData">Hour</button>
+          </div>
+          <div class="d-flex" style="margin: 0; flex-direction: column-reverse; display: flex; left: 20%; bottom: 0!important;">
+            <small class="coin-performance" id="day diff"></small>
+            <button onclick="get_coin_chart_data(handleCoinChartData, selected_coin['id'], 'day')" type="button" class="btn" id="dayData">Day</button>
+          </div>
+          <div class="d-flex" style="margin: 0; flex-direction: column-reverse; display: flex; bottom: 0!important;">
+            <small class="coin-performance" id="week diff"></small>
+            <button onclick="get_coin_chart_data(handleCoinChartData, selected_coin['id'], 'week')" type="button" class="btn" id="weekData">Week</button>
+          </div>
+          <div class="d-flex" style="margin: 0; flex-direction: column-reverse; display: flex; bottom: 0!important;">
+            <small class="coin-performance" id="month diff"></small>
+            <button onclick="get_coin_chart_data(handleCoinChartData, selected_coin['id'], 'month')" type="button" class="btn" id="monthData">Month</button>
+          </div>
+          <div class="d-flex" style="margin: 0; flex-direction: column-reverse; display: flex; bottom: 0!important;">
+            <small class="coin-performance" id="year diff"></small>
+            <button onclick="get_coin_chart_data(handleCoinChartData, selected_coin['id'], 'year')" type="button" class="btn" id="yearData">Year</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+  <table class="table" style="table-layout: fixed">
+  <thead>
+    <tr>
+      <th scope="row">Top</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Market Cap</th>
+      <th>24h value</th>
+      <th>Hour</th>
+      <th>Day</th>
+      <th>Week</th>
+      <th>Month</th>
+      <th>Year</th>
+      <th>Links</th>
+    </tr>
+  </thead>
+  <tbody id="table-body">
+
+  </tbody>
+</table>
+
+</div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="{{ url_for('static', path='js/base.js') }}"></script>
+  <script src="{{ url_for('static', path='js/data.js') }}"></script>
+  <script src="{{ url_for('static', path='js/setup_scripts.js') }}"></script>
+  <script src="{{ url_for('static', path='js/buttons.js') }}"></script>
+  <script src="{{ url_for('static', path='js/follow_lists.js') }}"></script>
+  <script src="{{ url_for('static', path='js/items/table.js') }}"></script>
+  <script src="{{ url_for('static', path='js/items/bubbles.js') }}"></script>
+  <script src="{{ url_for('static', path='js/items/chart.js') }}"></script>
+  <script src="{{ url_for('static', path='js/modals/modal.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+  <script>
+
+    let LOGOS_URI = `{{ url_for('static', path='/data/logos/') }}`
+    console.log(LOGOS_URI)
+  </script>
+  </body>
+</html>

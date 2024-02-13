@@ -1,5 +1,4 @@
-from pydantic import BaseModel, field_validator, validator, ValidationError
-from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, ValidationError, field_validator
 
 
 class CurrencySchema(BaseModel):
@@ -12,5 +11,3 @@ class CurrencySchema(BaseModel):
         if v.lower() not in ['usd', 'eur', 'gbp', 'rub']:
             raise ValidationError('incorrect currency input')
         return v.lower()
-
-

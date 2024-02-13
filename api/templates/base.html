@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Base page</title>
+
 </head>
 
 <body>
@@ -32,8 +33,21 @@
         <button id="get-data-button">Get data</button>
     </div>
 
+    <p>{{ request.session.follow_lists }}</p>
+
+    <select name="" id="">
+
+        {% for list in request.session.follow_lists %}
+        <option value="">{{ list }}</option>
+        {% endfor %}
+
+
+    </select>
+    <input type="text">
+    <button>Create new list</button>
 
 </div>
+
 <nav class="nav">
     <li><a href="#">Some link</a></li>
     <li><a href="#">Some link</a></li>
@@ -67,6 +81,8 @@
 <script src="{{ url_for('static', path='js/follow_lists.js') }}"></script>
 <script>
 
+let LOGOS_URL = `{{ url_for('static', path='/data.logos') }}`
+console.log(LOGOS_URL)
 
 class URLS_MANAGER {
 

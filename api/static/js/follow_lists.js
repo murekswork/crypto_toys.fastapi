@@ -10,9 +10,6 @@ class followListsUrlManager {
 
 }
 
-
-let follow_lists_manager
-
 class followListsManager {
 
     constructor() {
