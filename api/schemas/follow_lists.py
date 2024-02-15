@@ -6,7 +6,15 @@ class FollowListSchema(BaseModel):
     coins: list[int] = []
 
 
-class FollowList(BaseModel):
+class FollowListSchemaCreate(BaseModel):
+    name: str = 'default'
 
+
+class AddCoinToFollowListSchema(BaseModel):
+    list_name: str
+    coin_id: int
+
+
+class FollowList(BaseModel):
     name: str
     coins: set[int]
