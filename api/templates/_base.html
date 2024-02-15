@@ -36,7 +36,7 @@
 <div hidden="hidden"
      class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
-    <canvas style="position: absolute; max-width: 100%; max-height: 100%"
+    <canvas style="position: absolute; max-width: 98%; max-height: 100%"
             id="bubbleCanvas"></canvas>
     <header class="mb-auto">
         <div>
@@ -118,17 +118,18 @@
                             data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <small class="fs-6 text-light"
-                           id="coin-calculator-coin-price"></small>
+                <div class="modal-body" style="margin-bottom: 0; padding: 0">
+
                     <div class="container w-50 form-outline d-flex"
                          id="select-follow-list">
+                        <small class="fs-6 text-light"
+                               id="coin-calculator-coin-price"></small>
                         <input type="number" id="coin-calculator"
                                class="form-control text-light"
                                style="background-color: rgb(0,0,0,0)"/>
                         <span id="coin-info-modal_add-badge"
                               class="badge badge-pill"><small
-                                class="fs-1">+</small></span>
+                                class="fs-4 btn text-light">+</small></span>
                     </div>
                     <small class="fs-6 text-light"
                            id="coin-calculator-result"></small>
@@ -138,54 +139,62 @@
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>
-                <div class="modal-footer"
+                <div class=""
                      style="border-top: none; padding: 0;">
 
-                    <div class="w-100 d-flex">
-                        <div class="d-flex"
+                    <div class="nav navbar"
+                         style="padding-top: 0; margin-top: 0;">
+                        <div class="nav nav-link text-light w-25 d-flex"
                              style="margin: 0; flex-direction: column-reverse; display: flex; bottom: 0!important;">
-                            <small class="coin-performance"
-                                   id="hour diff"></small>
                             <button onclick="get_coin_chart_data(data_handler.handleCoinChartData, selected_coin['id'], 'hour')"
-                                    type="button" class="btn" id="hourData">
+                                    type="button" class="btn btn-outline"
+                                    id="hourData"
+                                    style="border-bottom-left-radius: 50%">
+                                <small class="coin-performance"
+                                       id="hour diff"></small>
+
                                 Hour
                             </button>
                         </div>
-                        <div class="d-flex"
+                        <div class="nav nav-link text-light w-25 d-flex"
                              style="margin: 0; flex-direction: column-reverse; display: flex; left: 20%; bottom: 0!important;">
-                            <small class="coin-performance"
-                                   id="day diff"></small>
                             <button onclick="get_coin_chart_data(data_handler.handleCoinChartData, selected_coin['id'], 'day')"
                                     type="button" class="btn" id="dayData">Day
+                                <small class="coin-performance"
+                                       id="day diff"></small>
                             </button>
                         </div>
-                        <div class="d-flex"
+                        <div class="nav nav-link text-light w-25 d-flex"
                              style="margin: 0; flex-direction: column-reverse; display: flex; bottom: 0!important;">
-                            <small class="coin-performance"
-                                   id="week diff"></small>
                             <button onclick="get_coin_chart_data(data_handler.handleCoinChartData, selected_coin['id'], 'week')"
                                     type="button" class="btn" id="weekData">
+                                <small class="coin-performance"
+                                       id="week diff"></small>
+
                                 Week
                             </button>
                         </div>
-                        <div class="d-flex"
+                        <div class="nav nav-link text-light w-25 d-flex"
                              style="margin: 0; flex-direction: column-reverse; display: flex; bottom: 0!important;">
-                            <small class="coin-performance"
-                                   id="month diff"></small>
                             <button onclick="get_coin_chart_data(data_handler.handleCoinChartData, selected_coin['id'], 'month')"
-                                    type="button" class="btn" id="monthData">
+                                    type="button" class="btn" id="monthData"
+                                    style="border-bottom-right-radius: 50%">
+                                <small class="coin-performance"
+                                       id="month diff"></small>
+
                                 Month
                             </button>
                         </div>
-                        <div class="d-flex"
-                             style="margin: 0; flex-direction: column-reverse; display: flex; bottom: 0!important;">
-                            <small class="coin-performance"
-                                   id="year diff"></small>
-                            <button onclick="get_coin_chart_data(data_handler.handleCoinChartData, selected_coin['id'], 'year')"
-                                    type="button" class="btn" id="yearData">
-                                Year
-                            </button>
-                        </div>
+                        <!--                        TODO: RESTORE YEAR BUTTON-->
+                        <!--                        <div class="nav nav-link text-light w-25 d-flex"-->
+                        <!--                             style="margin: 0; flex-direction: column-reverse; display: flex; bottom: 0!important;">-->
+                        <!--                            <button onclick="get_coin_chart_data(data_handler.handleCoinChartData, selected_coin['id'], 'month')"-->
+                        <!--                                    type="button" class="btn" id="yearData">-->
+                        <!--                            <small class="coin-performance"-->
+                        <!--                                   id="year diff"></small>-->
+                        <!--                                Year-->
+                        <!--                        </button>-->
+                        <!--                        </div>-->
 
                     </div>
 
@@ -259,7 +268,7 @@
 </table>
 
 </div>
-
+<link href="{{ url_for('static', path='css/base.css') }}" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="{{ url_for('static', path='js/ajax-scripts.js') }}"></script>
 <script src="{{ url_for('static', path='js/data.js') }}"></script>
