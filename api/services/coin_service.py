@@ -75,15 +75,15 @@ class ApiService(BaseService):
 
     async def get_market_data_with_skip(self, skip: int, limit: int,
                                         currency: str) -> list[CoinSchema]:
-
-        if not 0 <= skip <= 999 or not 0 <= limit <= 100 or not (skip + limit) <= 1000:
-
-            raise HTTPException(
-                status_code=403,
-                detail='skip value must be between 0 and 999 '
-                       'and limit must be between 0 and 100.'
-                       'also skip + limit must be lower than or equal to 1000'
-            )
+        #
+        # if not 0 <= skip <= 999 or not 0 <= limit <= 100 or not (skip + limit) <= 1000:
+        #
+        #     raise HTTPException(
+        #         status_code=403,
+        #         detail='skip value must be between 0 and 999 '
+        #                'and limit must be between 0 and 100.'
+        #                'also skip + limit must be lower than or equal to 1000'
+        #     )
         try:
             CurrencySchema(currency=currency)
         except Exception as e:

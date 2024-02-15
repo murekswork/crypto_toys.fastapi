@@ -1,7 +1,10 @@
 from fastapi import APIRouter, HTTPException, Request
-from starlette.responses import JSONResponse
 
-from api.schemas.follow_lists import FollowListSchema
+from api.schemas.follow_lists import (
+    AddCoinToFollowListSchema,
+    FollowListSchema,
+    FollowListSchemaCreate,
+)
 from api.services.session_service import SessionService
 
 session_router = APIRouter(tags=['Session Router'])
@@ -22,10 +25,10 @@ async def get_follow_lists(
 @session_router.post('/me/follow_lists', response_model=FollowListSchema)
 async def create_follow_list(
         request: Request,
-        lst_name: str,
+        list_name: FollowListSchemaCreate,
 ) -> FollowListSchema:
     service = SessionService(request)
-    new_lst = await service.create_follow_list(lst_name)
+    new_lst = await service.create_follow_list(list_name.name)
     return new_lst
 
 
@@ -33,11 +36,10 @@ async def create_follow_list(
                      response_model=FollowListSchema)
 async def add_to_follow_list(
         request: Request,
-        list_name: str,
-        coin_id: int,
+        list: AddCoinToFollowListSchema,
 ) -> FollowListSchema:
     service = SessionService(request)
-    new_coin = await service.add_to_follow_list(list_name, coin_id)
+    new_coin = await service.add_to_follow_list(list.list_name, list.coin_id)
     return new_coin
 
 
@@ -47,7 +49,7 @@ async def delete_from_follow_list(
         request: Request,
         list_name: str,
         coin_id: int,
-) -> JSONResponse:
+) -> FollowListSchema:
     service = SessionService(request)
     delete_coin = await service.remove_from_follow_list(list_name, coin_id)
     return delete_coin
