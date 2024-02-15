@@ -1,14 +1,13 @@
 import logging
 
 import aioredis
-from aioredis import Redis
 from fastapi import HTTPException
 
 
 class CacheRepository:
 
     def __init__(self, redis_cp: aioredis.ConnectionPool):
-        self.cache = Redis(connection_pool=redis_cp)
+        self.cache = aioredis.Redis(connection_pool=redis_cp)
 
     async def set(self, key: str, value: str):
         try:
