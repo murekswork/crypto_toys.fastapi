@@ -16,5 +16,5 @@ def create_app() -> FastAPI:
     app.include_router(router)
     app.include_router(session_router)
     app.include_router(pages_router)
-    app.add_middleware(SessionMiddleware, secret_key='very_secret_key', max_age=None)
+    app.add_middleware(SessionMiddleware, secret_key='salt')
     return app
