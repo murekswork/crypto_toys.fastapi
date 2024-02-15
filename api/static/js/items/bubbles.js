@@ -195,7 +195,7 @@ canvas.addEventListener('click', function(event) {
       // Bubble is clicked, log its information to the console
       console.log(`Clicked Bubble: Name - ${bubble.name}, Radius - ${bubble.radius}, Position - (${bubble.x}, ${bubble.y})`);
       action_coin_name = bubble.name
-      openCoinInfoModal(bubble.name)
+      coin_info_modal_manager.openCoinInfoModal(bubble.name)
 
       break;  // If you want to log only the top bubble (in case of overlapping bubbles), remove this line
     }
