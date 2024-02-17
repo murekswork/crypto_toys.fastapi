@@ -50,7 +50,7 @@ class ApiService(BaseService):
         return coins_schemas
 
     async def get_explicit_coin(self, currency: str,
-                                coin_id: str) -> CoinSchema:
+                                coin_id: int) -> CoinSchema:
         # firstly check if requested coin exists in cache
         cached = await self.cache_repo.get(f'{coin_id}_{currency}')
         if cached is not None:
@@ -62,7 +62,7 @@ class ApiService(BaseService):
         )
 
     async def get_explicit_coin_chart(self,
-                                      coin_id: str,
+                                      coin_id: int,
                                       timestamp: str) -> list[dict]:
         cached = await self.cache_repo.get(f'{coin_id}_{timestamp}_chart')
         if cached is not None:
@@ -75,15 +75,8 @@ class ApiService(BaseService):
 
     async def get_market_data_with_skip(self, skip: int, limit: int,
                                         currency: str) -> list[CoinSchema]:
-        #
-        # if not 0 <= skip <= 999 or not 0 <= limit <= 100 or not (skip + limit) <= 1000:
-        #
-        #     raise HTTPException(
-        #         status_code=403,
-        #         detail='skip value must be between 0 and 999 '
-        #                'and limit must be between 0 and 100.'
-        #                'also skip + limit must be lower than or equal to 1000'
-        #     )
+        if (skip + limit) > 1000 or (skip + limit) < 0:
+            raise HTTPException(status_code=403, detail='invalid skip or limit!')
         try:
             CurrencySchema(currency=currency)
         except Exception as e:
@@ -92,6 +85,7 @@ class ApiService(BaseService):
                 detail=f'invalid currency input! {e}'
             )
         cached = await self.cache_repo.get(f'coin1000{currency}')
+        # TODO: CREATE DATA MAPPER FROM CACHE TO SERVICE
         if cached is not None:
             cached_dict = json.loads(cached)  # type : ignore
             result = []
@@ -99,10 +93,12 @@ class ApiService(BaseService):
                 result.append(CoinSchema(**cached_dict[i]))  # type : ignore
             return result
         else:
+
             try:
                 await self.get_full_market_data(currency=currency)
                 return await self.get_market_data_with_skip(skip, limit, currency)
             except Exception as e:
+
                 raise HTTPException(
                     status_code=404,
                     detail=f'temp probs try again later! {e}'

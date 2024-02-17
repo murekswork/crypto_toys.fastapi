@@ -23,20 +23,18 @@ class CoinParseRepository:
         raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY,
                             detail='Could not fetch market data')
 
-    async def parse_coin_data(self, coin_id: str, currency: str):
+    async def parse_coin_data(self, coin_id: int, currency: str):
         ...
 
-    async def parse_coin_chart(self, coin_id: str, timestamp: str):
+    async def parse_coin_chart(self, coin_id: int, timestamp: str) -> str:
         async with self.client as c:
             response = await c.get(
                 self.settings.COIN_TIMESTAMP_CHART_URL.format(timestamp,
                                                               coin_id)
             )
-            print(
-                f'Chart reponse is {json.dumps(response.json())}'
-            )
+
             if response.status_code == 200:
                 return json.dumps(response.json())
 
-        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY,
-                            detail='Could not fetch coin data')
+            raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY,
+                                detail='Could not fetch coin data')
