@@ -18,52 +18,52 @@ function createChart(data) {
     console.log(data_datasets)
 
     chart = new Chart(ctx, {
-      type: "line",
-      data: {
-    labels: data_labels,
-    datasets: [{
-      label: '',
-      borderColor: "rgb(13,182,255)",
-      data: data_datasets,
-      borderWidth: 2,
-      fill: false,
-      pointRadius: 0,
-      pointHitRadius: 4,
-    }]
-  },
-  options: {
-
-      plugins: {
-          subtitle: {
-              display: false,
-          },
-          tooltips: {
-              mode: 'index',
-              intersect: false},
-          legend: {
-              display: false,
-            },
-
-      },
-    scales: {
-      x: {
-        ticks: {
-          display: false // Hide x-axis legend
+        type: "line",
+        data: {
+            labels: data_labels,
+            datasets: [{
+                label: '',
+                borderColor: "rgb(13,182,255)",
+                data: data_datasets,
+                borderWidth: 2,
+                fill: false,
+                pointRadius: 0,
+                pointHitRadius: 15,
+            }]
         },
-        grid: {
-          display: false
-        }
-      },
-      y: {
-        display: false, // Hide y-axis legend
-        grid: {
-          display: false
-        }
-      }
-    },
-    backgroundColor: 'transparent'
-  }
-});
+        options: {
 
+            plugins: {
+                subtitle: {
+                    display: false,
+                },
+                tooltips: {
+                    mode: 'nearest',
+                    intersect: false,
+                },
+                legend: {
+                    display: false,
+                },
 
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        display: false // Hide x-axis legend
+                    },
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+
+                    display: false, // Hide y-axis legend
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            backgroundColor: 'transparent'
+        }
+    });
 }
