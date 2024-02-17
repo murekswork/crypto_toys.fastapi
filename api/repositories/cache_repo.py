@@ -32,7 +32,7 @@ class CacheRepository:
                                 detail=f'Cache database connection error! {e}')
 
     async def set_coin_chart_cache(self,
-                                   coin_id: str,
+                                   coin_id: int,
                                    timestamp: str,
                                    value: str) -> None:
 
