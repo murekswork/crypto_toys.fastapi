@@ -17,12 +17,17 @@ class BaseService:
 class ApiService(BaseService):
 
     def __init__(
-            self,
-            redis_cp: aioredis.ConnectionPool = Depends(get_redis)) -> None:
+        self,
+        redis_cp: aioredis.ConnectionPool = Depends(get_redis)
+    ) -> None:
         self.cache_repo = CacheRepository(redis_cp)
         self.parse_repo = CoinParseRepository()
 
-    async def get_full_market_data(self, currency: str) -> list[CoinSchema]:
+    async def get_full_market_data(
+        self, 
+        currency: str
+    ) -> list[CoinSchema]:
+        
         try:
             CurrencySchema(currency=currency)
         except Exception as e:
@@ -49,8 +54,11 @@ class ApiService(BaseService):
                                       coin.model_dump_json())
         return coins_schemas
 
-    async def get_explicit_coin(self, currency: str,
-                                coin_id: int) -> CoinSchema:
+    async def get_explicit_coin(
+        self, 
+        currency: str,
+        coin_id: int
+    ) -> CoinSchema:
         # firstly check if requested coin exists in cache
         cached = await self.cache_repo.get(f'{coin_id}_{currency}')
         if cached is not None:
@@ -61,24 +69,35 @@ class ApiService(BaseService):
             detail='could not find selected coin'
         )
 
-    async def get_explicit_coin_chart(self,
-                                      coin_id: int,
-                                      timestamp: str) -> list[dict]:
+    async def get_explicit_coin_chart(
+        self,
+        coin_id: int,
+        timestamp: str
+    ) -> list[dict]:
+        
         cached = await self.cache_repo.get(f'{coin_id}_{timestamp}_chart')
         if cached is not None:
             return json.loads(cached)
 
         parse_data = await self.parse_repo.parse_coin_chart(coin_id, timestamp)
-        await self.cache_repo.set_coin_chart_cache(coin_id, timestamp, parse_data)
+        await self.cache_repo.set_coin_chart_cache(
+            coin_id, 
+            timestamp, 
+            parse_data
+        )
 
         return [value for value in json.loads(parse_data)]
 
-    async def get_market_data_with_skip(self, skip: int, limit: int,
-                                        currency: str) -> list[CoinSchema]:
+    async def get_market_data_with_skip(
+        self, s
+        kip: int, limit: int,
+        currency: str
+    ) -> list[CoinSchema]:
+        
         if (skip + limit) > 1000 or (skip + limit) < 0:
             raise HTTPException(status_code=403, detail='invalid skip or limit!')
         try:
-            CurrencySchema(currency=currency)
+            CurrencySchema(currency)
         except Exception as e:
             raise HTTPException(
                 status_code=403,
@@ -95,8 +114,12 @@ class ApiService(BaseService):
         else:
 
             try:
-                await self.get_full_market_data(currency=currency)
-                return await self.get_market_data_with_skip(skip, limit, currency)
+                await self.get_full_market_data(currency)
+                return await self.get_market_data_with_skip(
+                    skip, l
+                    imit, 
+                    currency
+                )
             except Exception as e:
 
                 raise HTTPException(
