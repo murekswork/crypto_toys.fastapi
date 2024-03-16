@@ -8,9 +8,11 @@ from api.services.coin_service import ApiService
 coin_router = APIRouter(tags=['Coin Api Router'])
 
 
-@coin_router.get('/market_data/{currency}',
-                 response_model=list[CoinSchema],
-                 description='Api parses huge json file from cryptobubbles site')
+@coin_router.get(
+  '/market_data/{currency}',
+  response_model=list[CoinSchema],
+  description='Api parses huge json file from cryptobubbles site'
+)
 async def market_data(
         currency: Literal['usd', 'rub', 'eur'],
         service: ApiService = Depends()
@@ -44,20 +46,10 @@ async def market_data_with_skip(
 
 
 @coin_router.get('/charts/')
-async def get_coin_chart_data(
+async def coin_chart_data(
         coin_id: str,
         timestamp: Literal['day', 'week', 'month', 'hour', 'year'] = 'day',
         service: ApiService = Depends()
 ) -> list[dict]:
     data = await service.get_explicit_coin_chart(coin_id, timestamp)
     return data
-
-
-# @parsing_router.post("me/follow_lists")
-# async def create_follow_lists(
-#         request: Request,
-#         list_name: str,
-# ) -> list[FollowList] | None:
-#     await request_session.add_follow_list(list_name)
-#     response = await request_session.get_follow_lists()
-#     return response
