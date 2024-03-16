@@ -59,7 +59,8 @@ async def delete_from_follow_list(
                     response_model=FollowListSchema)
 async def get_follow_list(
         list_name: str,
-        request: Request) -> FollowListSchema:
+        request: Request
+) -> FollowListSchema:
     service = SessionService(request)
     requested_list = await service.get_follow_list(list_name)
     return requested_list
