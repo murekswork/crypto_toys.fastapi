@@ -10,11 +10,7 @@ from api.schemas.coin_schemas import CoinSchema
 from api.schemas.response_schemas import CurrencySchema
 
 
-class BaseService:
-    pass
-
-
-class ApiService(BaseService):
+class ApiService:
 
     def __init__(
         self,
